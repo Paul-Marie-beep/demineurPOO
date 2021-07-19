@@ -1,0 +1,66 @@
+
+body {
+  margin: 0px;
+  background: linear-gradient(to top left, #18ceee, #5577e6);
+  background-size: cover;
+  width: 100%;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+.board--container {
+  margin-top: 3rem;
+  width: 70%;
+  margin: auto;
+  margin-top: 3rem;
+  margin-bottom: 3rem;
+}
+
+.boardgame {
+  display: grid;
+  grid-template-columns: repeat(8, 0fr);
+  gap: 0px;
+  margin: auto;
+  width: fit-content;
+  z-index: 1;
+  
+
+
+}
+
+.case {
+  border: 1px solid black;
+  height: 5rem;
+  width: 5rem;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.inside-case {
+  height: min-content;
+  width: min-content;
+  font-size: 3rem;
+}
+
+.cover--container {
+  display: grid;
+  grid-template-columns: repeat(8, 0fr);
+  gap: 0px;
+  margin: auto;
+  width: fit-content;
+  transform: translateY(-100%);
+  z-index: 2;
+
+}
+
+.cover {
+  height: 5rem;
+  width: 5rem;
+  background-color:blue;
+  border: 1px solid darkblue;
+}
+
