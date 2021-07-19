@@ -165,6 +165,13 @@ class InitGameCl {
   })
   }
 
+  clickHandler() {
+    coverPlate.addEventListener("click", function(e) {
+      // Si on clique sur une case qui contient une bombre => problème. Sinon, on découvre la case.
+      allCasesArray[e.target.dataset.number - 1].bombPresence === "yes" ? coverPlate.classList.add("hidden"):document.querySelector(`.cover-top--${e.target.dataset.number}`).classList.add("hidden");
+    })
+  }
+
 } 
 
 // On définit une classe pour les cases du jeu
@@ -181,21 +188,8 @@ class CaseCl {
   setNumberOfBombsNearby() {
     this.NumberOfBombsNearby = 1
   }
-
-
 }
 
-class DemineurTurnCL {
-
-  
-  clickHandler() {
-    coverPlate.addEventListener("click", function(e) {
-      // Si on clique sur une case qui contient une bombre => problème. Sinon, on découvre la case.
-      allCasesArray[e.target.dataset.number - 1].bombPresence === "yes" ? coverPlate.classList.add("hidden"):document.querySelector(`.cover-top--${e.target.dataset.number}`).classList.add("hidden");
-    })
-  }
-  
-}
 
 // On crée la représentation visuelle du jeu
 class boardGameDisplayCl {
@@ -262,10 +256,10 @@ const newDemineurGame = new InitGameCl(nombreDeCasesTemp, 10);
 newDemineurGame.createJSCases();
 newDemineurGame.putBombsOnJSCases();
 newDemineurGame.calculateNumberOfBombsNearby();
+newDemineurGame.clickHandler();
 
 
-const newDemineurTurn = new DemineurTurnCL();
-newDemineurTurn.clickHandler();
+
 
 
 const newBoardGameDisplay = new boardGameDisplayCl(nombreDeCasesTemp);
