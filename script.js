@@ -219,7 +219,7 @@ class boardGameDisplayCl {
   showBombs() {
     allCasesArray.forEach(function(cas) {
       if (cas.bombPresence === "yes") {
-        document.querySelector(`.inside-case--${cas.position}`).innerHTML = "B";
+        document.querySelector(`.inside-case--${cas.position}`).innerHTML = "💣";
       }
     });
   }
