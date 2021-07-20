@@ -1,9 +1,9 @@
-
 body {
   margin: 0px;
   background: linear-gradient(to top left, #18ceee, #5577e6);
   background-size: cover;
   width: 100%;
+  position: relative;
 }
 
 .hidden {
@@ -25,9 +25,6 @@ body {
   margin: auto;
   width: fit-content;
   z-index: 1;
-  
-
-
 }
 
 .case {
@@ -54,13 +51,54 @@ body {
   width: fit-content;
   transform: translateY(-100%);
   z-index: 2;
-
 }
 
 .cover {
   height: 5rem;
   width: 5rem;
-  background-color:blue;
+  background-color: blue;
   border: 1px solid darkblue;
 }
 
+.popup {
+  height: 12rem;
+  width: 80%;
+  margin: auto;
+  position: absolute;
+  bottom: 65%;
+  left: 8%;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  background-color: white;
+}
+
+.text {
+  font-size: 5rem;
+  width: fit-content;
+}
+
+.gameover-text {
+  color: red;
+}
+
+.victory-text {
+  color: lime;
+}
+
+.endgame-btn {
+  background-color: midnightblue;
+  color: white;
+  border-radius: 10px;
+  padding: 0.5rem;
+}
+
+.endgame-btn:hover {
+  cursor: pointer;
+}
+
+.blind {
+  display: none;
+}

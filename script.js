@@ -40,53 +40,53 @@ class InitGameCl {
   calculateNumberOfBombsNearby() {
     allCasesArray.forEach(function (cas) {
       let count;
-      if (cas.bombPresence === "yes") {
+      if (cas.bombPresence) {
         cas.numberOfBombsNearby = 0;
       } else if (cas.position === 1) {
         count = 0;
-        if (allCasesArray[cas.position].bombPresence === "yes") {
+        if (allCasesArray[cas.position].bombPresence) {
           count++;
         }
-        if (allCasesArray[cas.position - 1 + 8].bombPresence === "yes") {
+        if (allCasesArray[cas.position - 1 + 8].bombPresence) {
           count++;
         }
-        if (allCasesArray[cas.position - 1 + 9].bombPresence === "yes") {
+        if (allCasesArray[cas.position - 1 + 9].bombPresence) {
           count++;
         }
         cas.numberOfBombsNearby = count;
       } else if (cas.position === 8) {
         count = 0;
-        if (allCasesArray[cas.position - 2].bombPresence === "yes") {
+        if (allCasesArray[cas.position - 2].bombPresence) {
           count++;
         }
-        if (allCasesArray[cas.position - 1 + 8].bombPresence === "yes") {
+        if (allCasesArray[cas.position - 1 + 8].bombPresence) {
           count++;
         }
-        if (allCasesArray[cas.position - 1 + 7].bombPresence === "yes") {
+        if (allCasesArray[cas.position - 1 + 7].bombPresence) {
           count++;
         }
         cas.numberOfBombsNearby = count;
       } else if (cas.position === 57) {
         count = 0;
-        if (allCasesArray[cas.position - 1 - 8].bombPresence === "yes") {
+        if (allCasesArray[cas.position - 1 - 8].bombPresence) {
           count++;
         }
-        if (allCasesArray[cas.position].bombPresence === "yes") {
+        if (allCasesArray[cas.position].bombPresence) {
           count++;
         }
-        if (allCasesArray[cas.position - 1 - 7].bombPresence === "yes") {
+        if (allCasesArray[cas.position - 1 - 7].bombPresence) {
           count++;
         }
         cas.numberOfBombsNearby = count;
       } else if (cas.position === 64) {
         count = 0;
-        if (allCasesArray[cas.position - 1 - 8].bombPresence === "yes") {
+        if (allCasesArray[cas.position - 1 - 8].bombPresence) {
           count++;
         }
-        if (allCasesArray[cas.position - 2].bombPresence === "yes") {
+        if (allCasesArray[cas.position - 2].bombPresence) {
           count++;
         }
-        if (allCasesArray[cas.position - 1 - 9].bombPresence === "yes") {
+        if (allCasesArray[cas.position - 1 - 9].bombPresence) {
           count++;
         }
         cas.numberOfBombsNearby = count;
@@ -99,19 +99,19 @@ class InitGameCl {
         cas.position === 7
       ) {
         count = 0;
-        if (allCasesArray[cas.position - 2].bombPresence === "yes") {
+        if (allCasesArray[cas.position - 2].bombPresence) {
           count++;
         }
-        if (allCasesArray[cas.position].bombPresence === "yes") {
+        if (allCasesArray[cas.position].bombPresence) {
           count++;
         }
-        if (allCasesArray[cas.position - 1 + 8].bombPresence === "yes") {
+        if (allCasesArray[cas.position - 1 + 8].bombPresence) {
           count++;
         }
-        if (allCasesArray[cas.position - 1 + 7].bombPresence === "yes") {
+        if (allCasesArray[cas.position - 1 + 7].bombPresence) {
           count++;
         }
-        if (allCasesArray[cas.position - 1 + 9].bombPresence === "yes") {
+        if (allCasesArray[cas.position - 1 + 9].bombPresence) {
           count++;
         }
         cas.numberOfBombsNearby = count;
@@ -124,19 +124,19 @@ class InitGameCl {
         cas.position === 63
       ) {
         count = 0;
-        if (allCasesArray[cas.position - 2].bombPresence === "yes") {
+        if (allCasesArray[cas.position - 2].bombPresence) {
           count++;
         }
-        if (allCasesArray[cas.position].bombPresence === "yes") {
+        if (allCasesArray[cas.position].bombPresence) {
           count++;
         }
-        if (allCasesArray[cas.position - 1 - 8].bombPresence === "yes") {
+        if (allCasesArray[cas.position - 1 - 8].bombPresence) {
           count++;
         }
-        if (allCasesArray[cas.position - 1 - 7].bombPresence === "yes") {
+        if (allCasesArray[cas.position - 1 - 7].bombPresence) {
           count++;
         }
-        if (allCasesArray[cas.position - 1 - 9].bombPresence === "yes") {
+        if (allCasesArray[cas.position - 1 - 9].bombPresence) {
           count++;
         }
         cas.numberOfBombsNearby = count;
@@ -149,19 +149,19 @@ class InitGameCl {
         cas.position === 49
       ) {
         count = 0;
-        if (allCasesArray[cas.position].bombPresence === "yes") {
+        if (allCasesArray[cas.position].bombPresence) {
           count++;
         }
-        if (allCasesArray[cas.position - 1 - 8].bombPresence === "yes") {
+        if (allCasesArray[cas.position - 1 - 8].bombPresence) {
           count++;
         }
-        if (allCasesArray[cas.position - 1 + 8].bombPresence === "yes") {
+        if (allCasesArray[cas.position - 1 + 8].bombPresence) {
           count++;
         }
-        if (allCasesArray[cas.position - 1 - 7].bombPresence === "yes") {
+        if (allCasesArray[cas.position - 1 - 7].bombPresence) {
           count++;
         }
-        if (allCasesArray[cas.position - 1 + 9].bombPresence === "yes") {
+        if (allCasesArray[cas.position - 1 + 9].bombPresence) {
           count++;
         }
         cas.numberOfBombsNearby = count;
@@ -174,46 +174,46 @@ class InitGameCl {
         cas.position === 56
       ) {
         count = 0;
-        if (allCasesArray[cas.position - 2].bombPresence === "yes") {
+        if (allCasesArray[cas.position - 2].bombPresence) {
           count++;
         }
-        if (allCasesArray[cas.position - 1 - 8].bombPresence === "yes") {
+        if (allCasesArray[cas.position - 1 - 8].bombPresence) {
           count++;
         }
-        if (allCasesArray[cas.position - 1 + 8].bombPresence === "yes") {
+        if (allCasesArray[cas.position - 1 + 8].bombPresence) {
           count++;
         }
-        if (allCasesArray[cas.position - 1 - 9].bombPresence === "yes") {
+        if (allCasesArray[cas.position - 1 - 9].bombPresence) {
           count++;
         }
-        if (allCasesArray[cas.position - 1 + 7].bombPresence === "yes") {
+        if (allCasesArray[cas.position - 1 + 7].bombPresence) {
           count++;
         }
         cas.numberOfBombsNearby = count;
       } else {
         count = 0;
-        if (allCasesArray[cas.position - 2].bombPresence === "yes") {
+        if (allCasesArray[cas.position - 2].bombPresence) {
           count++;
         }
-        if (allCasesArray[cas.position].bombPresence === "yes") {
+        if (allCasesArray[cas.position].bombPresence) {
           count++;
         }
-        if (allCasesArray[cas.position - 1 - 8].bombPresence === "yes") {
+        if (allCasesArray[cas.position - 1 - 8].bombPresence) {
           count++;
         }
-        if (allCasesArray[cas.position - 1 - 7].bombPresence === "yes") {
+        if (allCasesArray[cas.position - 1 - 7].bombPresence) {
           count++;
         }
-        if (allCasesArray[cas.position - 1 - 9].bombPresence === "yes") {
+        if (allCasesArray[cas.position - 1 - 9].bombPresence) {
           count++;
         }
-        if (allCasesArray[cas.position - 1 + 8].bombPresence === "yes") {
+        if (allCasesArray[cas.position - 1 + 8].bombPresence) {
           count++;
         }
-        if (allCasesArray[cas.position - 1 + 7].bombPresence === "yes") {
+        if (allCasesArray[cas.position - 1 + 7].bombPresence) {
           count++;
         }
-        if (allCasesArray[cas.position - 1 + 9].bombPresence === "yes") {
+        if (allCasesArray[cas.position - 1 + 9].bombPresence) {
           count++;
         }
         cas.numberOfBombsNearby = count;
@@ -224,7 +224,7 @@ class InitGameCl {
   // C'est la fonction que l'on va mettre les actions à effectuer quand on clique sur une case et que l'on va mettre dans l'eventhandler juste après
   actionsAfterClick(e) {
     // Si on clique sur une case qui contient une bombre => problème. Sinon, on découvre la case.
-    if (allCasesArray[e.target.dataset.number - 1].bombPresence === "yes") {
+    if (allCasesArray[e.target.dataset.number - 1].bombPresence) {
       coverPlate.classList.add("hidden");
       gameOverPopup.classList.remove("blind");
       coverPlate.removeEventListener("click", this.actionsAfterClick);
@@ -234,7 +234,7 @@ class InitGameCl {
         .querySelector(`.cover-top--${e.target.dataset.number}`)
         .classList.add("hidden");
       // On note que l'on a cliqué sur la case
-      allCasesArray[e.target.dataset.number - 1].wasClickedOn = "yes";
+      allCasesArray[e.target.dataset.number - 1].wasClickedOn = true;
       const newDemineurTurn = new DemineurTurnCl();
       // On vérifie la condition de victoire définie dans la classe DemineurturnCl et si elle est remplie, la partie est gagnée: on montre le popup et on arrête l'enventlistener
       if (newDemineurTurn.checkForVictory()) {
@@ -253,8 +253,8 @@ class DemineurTurnCl {
   // Pour gagner il faut que l'on ait cliqué sur toutes les cases qui ne contiennent pas de bombes
   checkForVictory() {
     return allCasesArray
-      .filter((cas) => cas.bombPresence === "no")
-      .every((val) => val.wasClickedOn === "yes");
+      .filter((cas) => !cas.bombPresence)
+      .every((val) => val.wasClickedOn);
   }
 }
 
@@ -263,15 +263,15 @@ class CaseCl {
   constructor(position, numberOfBombsNearby) {
     this.position = position;
     this.numberOfBombsNearby = numberOfBombsNearby;
-    this.bombPresence = "no";
+    this.bombPresence = false;
   }
 
   addBomb() {
-    this.bombPresence = "yes";
+    this.bombPresence = true;
   }
 
   clickedOn() {
-    this.wasClickedOn = "yes";
+    this.wasClickedOn = true;
   }
 }
 
@@ -302,7 +302,7 @@ class boardGameDisplayCl {
   // Si l'objet case contient une bombe, on va l'afficher sur l'interface
   showBombs() {
     allCasesArray.forEach(function (cas) {
-      if (cas.bombPresence === "yes") {
+      if (cas.bombPresence) {
         document.querySelector(`.inside-case--${cas.position}`).innerHTML =
           "💣";
       }
