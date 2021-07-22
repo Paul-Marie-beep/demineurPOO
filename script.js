@@ -4,10 +4,13 @@ const nombreDeCasesTemp = 64;
 
 const boardGame = document.querySelector(".boardgame");
 const coverPlate = document.querySelector(".cover--container");
-const allCasesArray = [];
-const bombPositionArray = [];
+let allCasesArray = [];
+let bombPositionArray = [];
 const gameOverPopup = document.querySelector(".gameover-popup");
 const victoryPopup = document.querySelector(".victory-popup");
+const gameoverBtn = document.querySelector(".gameover-button");
+const victoryBtn = document.querySelector(".victory-button");
+const scoreNumber = document.querySelector(".score-number");
 
 // On initilise les objets JS du jeu
 class InitGameCl {
@@ -228,6 +231,8 @@ class InitGameCl {
       coverPlate.classList.add("hidden");
       gameOverPopup.classList.remove("blind");
       coverPlate.removeEventListener("click", this.actionsAfterClick);
+      const anotherNewGame = new LaunchAnotherGameCl();
+      anotherNewGame.afterDefeatActions();
     } else {
       // On découvre la case sans bombe sur laquelle on vient de cliquer
       document
@@ -239,7 +244,10 @@ class InitGameCl {
       // On vérifie la condition de victoire définie dans la classe DemineurturnCl et si elle est remplie, la partie est gagnée: on montre le popup et on arrête l'enventlistener
       if (newDemineurTurn.checkForVictory()) {
         victoryPopup.classList.remove("blind");
+        coverPlate.classList.add("hidden");
         coverPlate.removeEventListener("click", this.actionsAfterClick);
+        const anotherNewGame = new LaunchAnotherGameCl();
+        anotherNewGame.afterVictoryActions();
       }
     }
   }
@@ -252,9 +260,36 @@ class InitGameCl {
 class DemineurTurnCl {
   // Pour gagner il faut que l'on ait cliqué sur toutes les cases qui ne contiennent pas de bombes
   checkForVictory() {
-    return allCasesArray
-      .filter((cas) => !cas.bombPresence)
-      .every((val) => val.wasClickedOn);
+    // return allCasesArray
+    //   .filter((cas) => !cas.bombPresence)
+    //   .every((val) => val.wasClickedOn);
+    return true;
+  }
+}
+
+class LaunchAnotherGameCl {
+  defeatBtnPressed() {
+    newStartGame.erasePreviousGame();
+    const anotherGame = new StartGameCl();
+    anotherGame.launchGame();
+    gameoverBtn.removeEventListener("click", this.defeatBtnPressed$);
+  }
+
+  afterDefeatActions() {
+    gameoverBtn.addEventListener("click", this.defeatBtnPressed);
+  }
+
+  victoryBtnPressed() {
+    newStartGame.erasePreviousGame();
+    const anotherGame = new StartGameCl();
+    anotherGame.launchGame();
+    victoryBtn.removeEventListener("click", this.defeatBtnPressed$);
+  }
+
+  afterVictoryActions() {
+    victoryBtn.addEventListener("click", this.victoryBtnPressed);
+    newScore.updateScore();
+    newScore.displayScore();
   }
 }
 
@@ -297,6 +332,7 @@ class boardGameDisplayCl {
       html = `<div class="cover cover-top--${i}" data-number = "${i}"></div>`;
       coverPlate.insertAdjacentHTML("beforeend", html);
     }
+    coverPlate.classList.remove("hidden");
   }
 
   // Si l'objet case contient une bombe, on va l'afficher sur l'interface
@@ -338,14 +374,48 @@ class boardGameDisplayCl {
   }
 }
 
-const newDemineurGame = new InitGameCl(nombreDeCasesTemp, 10);
-newDemineurGame.createJSCases();
-newDemineurGame.putBombsOnJSCases();
-newDemineurGame.calculateNumberOfBombsNearby();
-newDemineurGame.clickHandler();
+class KeepScoreCl {
+  constructor() {
+    this.score = 0;
+  }
 
-const newBoardGameDisplay = new boardGameDisplayCl(nombreDeCasesTemp);
-newBoardGameDisplay.createVisualBoard();
-newBoardGameDisplay.showBombs();
-newBoardGameDisplay.showBombsNearby();
-newBoardGameDisplay.createCover();
+  updateScore() {
+    this.score++;
+    console.log(this.score);
+  }
+
+  displayScore() {
+    scoreNumber.innerHTML = `${this.score}`;
+  }
+}
+
+class StartGameCl {
+  launchGame() {
+    const newDemineurGame = new InitGameCl(nombreDeCasesTemp, 10);
+    newDemineurGame.createJSCases();
+    newDemineurGame.putBombsOnJSCases();
+    newDemineurGame.calculateNumberOfBombsNearby();
+    newDemineurGame.clickHandler();
+
+    const newBoardGameDisplay = new boardGameDisplayCl(nombreDeCasesTemp);
+    newBoardGameDisplay.createVisualBoard();
+    newBoardGameDisplay.showBombs();
+    newBoardGameDisplay.showBombsNearby();
+    newBoardGameDisplay.createCover();
+  }
+
+  erasePreviousGame() {
+    bombPositionArray = [];
+    allCasesArray = [];
+    boardGame.innerHTML = "";
+    coverPlate.innerHTML = "";
+    victoryPopup.classList.add("blind");
+    gameOverPopup.classList.add("blind");
+  }
+}
+
+const newStartGame = new StartGameCl();
+newStartGame.launchGame();
+
+const newScore = new KeepScoreCl();
+newScore.displayScore();
