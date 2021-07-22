@@ -2,6 +2,7 @@
 
 const nombreDeCasesTemp = 64;
 
+const gameContainer = document.querySelector("board-container");
 const boardGame = document.querySelector(".boardgame");
 const coverPlate = document.querySelector(".cover--container");
 let allCasesArray = [];
@@ -10,7 +11,10 @@ const gameOverPopup = document.querySelector(".gameover-popup");
 const victoryPopup = document.querySelector(".victory-popup");
 const gameoverBtn = document.querySelector(".gameover-button");
 const victoryBtn = document.querySelector(".victory-button");
+const scoreDisplay = document.querySelector(".score-display");
 const scoreNumber = document.querySelector(".score-number");
+const startPopup = document.querySelector(".start-popup");
+const startButton = document.querySelector(".start-button");
 
 // On initilise les objets JS du jeu
 class InitGameCl {
@@ -335,6 +339,9 @@ class boardGameDisplayCl {
     coverPlate.classList.remove("hidden");
   }
 
+  showVisualBoard() {
+    gameContainer.classList.remove("blind");
+  }
   // Si l'objet case contient une bombe, on va l'afficher sur l'interface
   showBombs() {
     allCasesArray.forEach(function (cas) {
@@ -381,10 +388,10 @@ class KeepScoreCl {
 
   updateScore() {
     this.score++;
-    console.log(this.score);
   }
 
   displayScore() {
+    scoreNumber.classList.remove("blind");
     scoreNumber.innerHTML = `${this.score}`;
   }
 }
@@ -402,6 +409,18 @@ class StartGameCl {
     newBoardGameDisplay.showBombs();
     newBoardGameDisplay.showBombsNearby();
     newBoardGameDisplay.createCover();
+
+    newScore.displayScore();
+
+    scoreDisplay.classList.remove("blind");
+  }
+
+  welcome() {
+    scoreDisplay.classList.add("blind");
+    startButton.addEventListener("click", function (e) {
+      newStartGame.launchGame();
+      startPopup.classList.add("blind");
+    });
   }
 
   erasePreviousGame() {
@@ -415,7 +434,6 @@ class StartGameCl {
 }
 
 const newStartGame = new StartGameCl();
-newStartGame.launchGame();
+newStartGame.welcome();
 
 const newScore = new KeepScoreCl();
-newScore.displayScore();
