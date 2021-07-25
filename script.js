@@ -23,12 +23,14 @@ class InitGameCl {
     this.bombNumber = bombNumber;
   }
 
+  // On crée des cases qu'on range dans un tableau.
   createJSCases() {
     for (let j = 1; j <= this.caseNumber; j++) {
       allCasesArray.push(new CaseCl(j, 0));
     }
   }
 
+  // On met des bombes dans les cases
   putBombsOnJSCases() {
     // On déclare la fonction qui va nous fournir des entiers au hasard
     const randomInt = (min, max) =>
@@ -44,6 +46,7 @@ class InitGameCl {
     });
   }
 
+  // Pour chaque case, on calcule le nombre de cases qui sont sur les cases concommittantes.
   calculateNumberOfBombsNearby() {
     allCasesArray.forEach(function (cas) {
       let count;
@@ -228,9 +231,10 @@ class InitGameCl {
     });
   }
 
-  // C'est la fonction que l'on va mettre les actions à effectuer quand on clique sur une case et que l'on va mettre dans l'eventhandler juste après
+  // C'est la fonction dans laquelle on va mettre les actions à effectuer quand on clique sur une case et que l'on va mettre dans l'eventhandler juste après
   actionsAfterClick(e) {
-    // Si on clique sur une case qui contient une bombre => problème. Sinon, on découvre la case.
+    // Si on clique sur une case qui contient une bombe => problème. Sinon, on découvre la case.
+    // Conditon de défaite
     if (allCasesArray[e.target.dataset.number - 1].bombPresence) {
       coverPlate.classList.add("hidden");
       gameOverPopup.classList.remove("blind");
@@ -238,6 +242,7 @@ class InitGameCl {
       const anotherNewGame = new LaunchAnotherGameCl();
       anotherNewGame.afterDefeatActions();
     } else {
+      // Court 'normal' du jeu: on clique sur une case sans bombe.
       // On découvre la case sans bombe sur laquelle on vient de cliquer
       document
         .querySelector(`.cover-top--${e.target.dataset.number}`)
@@ -247,15 +252,19 @@ class InitGameCl {
       const newDemineurTurn = new DemineurTurnCl();
       // On vérifie la condition de victoire définie dans la classe DemineurturnCl et si elle est remplie, la partie est gagnée: on montre le popup et on arrête l'enventlistener
       if (newDemineurTurn.checkForVictory()) {
+        // On affiche le popup de victoire
         victoryPopup.classList.remove("blind");
+        // On enlève les caches ainsi que leur event listener
         coverPlate.classList.add("hidden");
         coverPlate.removeEventListener("click", this.actionsAfterClick);
+        // On lance une autre session de jeu
         const anotherNewGame = new LaunchAnotherGameCl();
         anotherNewGame.afterVictoryActions();
       }
     }
   }
 
+  // Event listener qui définit ce qui se passe quand on clique sur une case
   clickHandler() {
     coverPlate.addEventListener("click", this.actionsAfterClick);
   }
@@ -271,6 +280,7 @@ class DemineurTurnCl {
   }
 }
 
+// C'est la classe pour lancer une nouvelle session de jeu (ie pas la première)
 class LaunchAnotherGameCl {
   defeatBtnPressed() {
     newStartGame.erasePreviousGame();
@@ -309,6 +319,7 @@ class CaseCl {
     this.bombPresence = true;
   }
 
+  // Pour indiquer dans l'objet le fait qu'on a cliqué sur une case
   clickedOn() {
     this.wasClickedOn = true;
   }
@@ -320,6 +331,7 @@ class boardGameDisplayCl {
     this.caseNumber = caseNumber;
   }
 
+  // On crée les cases dans le HTML
   createVisualBoard() {
     let html;
     for (let i = 1; i <= this.caseNumber; i++) {
@@ -329,7 +341,7 @@ class boardGameDisplayCl {
       boardGame.insertAdjacentHTML("beforeend", html);
     }
   }
-
+  // On ajoute les caches en HTML
   createCover() {
     let html;
     for (let i = 1; i <= this.caseNumber; i++) {
@@ -339,6 +351,7 @@ class boardGameDisplayCl {
     coverPlate.classList.remove("hidden");
   }
 
+  // Pour montrer le jeu
   showVisualBoard() {
     gameContainer.classList.remove("blind");
   }
@@ -352,6 +365,7 @@ class boardGameDisplayCl {
     });
   }
 
+  // Pour que sur chaque case, le nombre de bombes à proximité s'affiche.
   showBombsNearby() {
     allCasesArray.forEach(function (cas) {
       if (cas.numberOfBombsNearby != 0) {
@@ -396,6 +410,7 @@ class KeepScoreCl {
   }
 }
 
+// Pour lancer le jeu: la première fois et les autres
 class StartGameCl {
   launchGame() {
     const newDemineurGame = new InitGameCl(nombreDeCasesTemp, 10);
@@ -415,6 +430,7 @@ class StartGameCl {
     scoreDisplay.classList.remove("blind");
   }
 
+  // Gère l'écran d'accueil avec le popup
   welcome() {
     scoreDisplay.classList.add("blind");
     startButton.addEventListener("click", function (e) {
@@ -423,6 +439,7 @@ class StartGameCl {
     });
   }
 
+  // On écrase les infos du jeu d'avant pour pouvoir recommancer
   erasePreviousGame() {
     bombPositionArray = [];
     allCasesArray = [];
@@ -433,7 +450,12 @@ class StartGameCl {
   }
 }
 
+const newScore = new KeepScoreCl();
 const newStartGame = new StartGameCl();
 newStartGame.welcome();
 
-const newScore = new KeepScoreCl();
+// class PerformCl {
+
+// }
+
+// const Perform = new PerformCl();
