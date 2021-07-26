@@ -15,8 +15,6 @@ const scoreDisplay = document.querySelector(".score-display");
 const scoreNumber = document.querySelector(".score-number");
 const startPopup = document.querySelector(".start-popup");
 const startButton = document.querySelector(".start-button");
-let outcome = "ongoing";
-let score = 0;
 
 class CaseCl {
   constructor(position, numberOfBombsNearby) {
@@ -324,6 +322,8 @@ class GameCl {
   constructor() {
     this.actionsAfterClick = this.actionsAfterClick.bind(this);
     this.startGame = this.startGame.bind(this);
+    this.outcome = "ongoing";
+    this.score = 0;
   }
 
   initGame() {
@@ -355,7 +355,7 @@ class GameCl {
       .querySelector(`.cover-top--${e.target.dataset.number}`)
       .classList.add("hidden");
     if (allCasesArray[e.target.dataset.number - 1].bombPresence) {
-      outcome = "defeat";
+      this.outcome = "defeat";
       coverPlate.removeEventListener("click", this.actionsAfterClick);
       this.playGame();
     } else if (
@@ -364,7 +364,7 @@ class GameCl {
         .every((val) => val.wasClickedOn)
     ) {
       coverPlate.removeEventListener("click", this.actionsAfterClick);
-      outcome = "victory";
+      this.outcome = "victory";
       this.playGame();
       // On affiche le popup de victoire
 
@@ -372,35 +372,36 @@ class GameCl {
     } else {
       allCasesArray[e.target.dataset.number - 1].wasClickedOn = true;
       coverPlate.removeEventListener("click", this.actionsAfterClick);
+      this.outcome = "victory";
       this.playGame();
     }
   }
 
   startGame() {
-    outcome === "victory"
+    this.outcome === "victory"
       ? victoryPopup.removeEventListener("click", this.startGame)
       : gameOverPopup.removeEventListener("click", this.startGame);
-    outcome = "ongoing";
+    this.outcome = "ongoing";
     this.initGame();
     this.playGame();
   }
 
   displayScore() {
     scoreNumber.classList.remove("blind");
-    scoreNumber.innerHTML = score;
+    scoreNumber.innerHTML = this.score;
   }
 
   playGame() {
-    if (outcome === "ongoing") {
+    if (this.outcome === "ongoing") {
       coverPlate.addEventListener("click", this.actionsAfterClick);
-    } else if (outcome === "defeat") {
+    } else if (this.outcome === "defeat") {
       coverPlate.classList.add("hidden");
       gameOverPopup.classList.remove("blind");
       gameoverBtn.addEventListener("click", this.startGame);
-    } else if (outcome === "victory") {
+    } else if (this.outcome === "victory") {
       coverPlate.classList.add("hidden");
       victoryPopup.classList.remove("blind");
-      score++;
+      this.score++;
       victoryPopup.addEventListener("click", this.startGame);
     }
   }
