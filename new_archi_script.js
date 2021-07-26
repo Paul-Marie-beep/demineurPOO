@@ -350,33 +350,6 @@ class GameCl {
     this.displayScore();
   }
 
-  actionsAfterClick(e) {
-    document
-      .querySelector(`.cover-top--${e.target.dataset.number}`)
-      .classList.add("hidden");
-    if (allCasesArray[e.target.dataset.number - 1].bombPresence) {
-      this.outcome = "defeat";
-      coverPlate.removeEventListener("click", this.actionsAfterClick);
-      this.playGame();
-    } else if (
-      allCasesArray
-        .filter((cas) => !cas.bombPresence)
-        .every((val) => val.wasClickedOn)
-    ) {
-      coverPlate.removeEventListener("click", this.actionsAfterClick);
-      this.outcome = "victory";
-      this.playGame();
-      // On affiche le popup de victoire
-
-      // On lance une autre session de jeu
-    } else {
-      allCasesArray[e.target.dataset.number - 1].wasClickedOn = true;
-      coverPlate.removeEventListener("click", this.actionsAfterClick);
-      this.outcome = "victory";
-      this.playGame();
-    }
-  }
-
   startGame() {
     this.outcome === "victory"
       ? victoryPopup.removeEventListener("click", this.startGame)
@@ -391,19 +364,45 @@ class GameCl {
     scoreNumber.innerHTML = this.score;
   }
 
-  playGame() {
-    if (this.outcome === "ongoing") {
-      coverPlate.addEventListener("click", this.actionsAfterClick);
-    } else if (this.outcome === "defeat") {
-      coverPlate.classList.add("hidden");
-      gameOverPopup.classList.remove("blind");
-      gameoverBtn.addEventListener("click", this.startGame);
-    } else if (this.outcome === "victory") {
-      coverPlate.classList.add("hidden");
-      victoryPopup.classList.remove("blind");
-      this.score++;
-      victoryPopup.addEventListener("click", this.startGame);
+  victoriousGame() {
+    coverPlate.removeEventListener("click", this.actionsAfterClick);
+    coverPlate.classList.add("hidden");
+    victoryPopup.classList.remove("blind");
+    this.score++;
+    victoryPopup.addEventListener("click", this.startGame);
+  }
+
+  unsuccesfullGame() {
+    coverPlate.removeEventListener("click", this.actionsAfterClick);
+    coverPlate.classList.add("hidden");
+    gameOverPopup.classList.remove("blind");
+    gameoverBtn.addEventListener("click", this.startGame);
+  }
+
+  checkVictory() {
+    if (
+      allCasesArray
+        .filter((cas) => !cas.bombPresence)
+        .every((val) => val.wasClickedOn)
+    ) {
+      this.victoriousGame();
     }
+  }
+
+  actionsAfterClick(e) {
+    document
+      .querySelector(`.cover-top--${e.target.dataset.number}`)
+      .classList.add("hidden");
+    if (allCasesArray[e.target.dataset.number - 1].bombPresence) {
+      this.unsuccesfullGame();
+    } else {
+      allCasesArray[e.target.dataset.number - 1].wasClickedOn = true;
+      this.checkVictory();
+    }
+  }
+
+  playGame() {
+    coverPlate.addEventListener("click", this.actionsAfterClick);
   }
 }
 
