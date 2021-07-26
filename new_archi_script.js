@@ -351,10 +351,6 @@ class GameCl {
   }
 
   startGame() {
-    this.outcome === "victory"
-      ? victoryPopup.removeEventListener("click", this.startGame)
-      : gameOverPopup.removeEventListener("click", this.startGame);
-    this.outcome = "ongoing";
     this.initGame();
     this.playGame();
   }
