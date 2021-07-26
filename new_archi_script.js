@@ -15,7 +15,7 @@ const scoreDisplay = document.querySelector(".score-display");
 const scoreNumber = document.querySelector(".score-number");
 const startPopup = document.querySelector(".start-popup");
 const startButton = document.querySelector(".start-button");
-let defeat;
+let outcome = "ongoing";
 
 class CaseCl {
   constructor(position, numberOfBombsNearby) {
@@ -318,39 +318,11 @@ class ShowCl {
   }
 }
 
-class TurnCl {
-  actionsAfterClick(e) {
-    document
-      .querySelector(`.cover-top--${e.target.dataset.number}`)
-      .classList.add("hidden");
-    if (allCasesArray[e.target.dataset.number - 1].bombPresence) {
-      coverPlate.removeEventListener("click", this.actionsAfterClick);
-      coverPlate.classList.add("hidden");
-      gameOverPopup.classList.remove("blind");
-    } else {
-      allCasesArray[e.target.dataset.number - 1].wasClickedOn = true;
-      if (
-        allCasesArray
-          .filter((cas) => !cas.bombPresence)
-          .every((val) => val.wasClickedOn)
-      ) {
-        // On affiche le popup de victoire
-        victoryPopup.classList.remove("blind");
-        // On enlève les caches ainsi que leur event listener
-        coverPlate.classList.add("hidden");
-        coverPlate.removeEventListener("click", this.actionsAfterClick);
-        // On lance une autre session de jeu
-      }
-    }
-  }
-
-  // Event listener qui définit ce qui se passe quand on clique sur une case
-  gameProcess() {
-    coverPlate.addEventListener("click", this.actionsAfterClick);
-  }
-}
-
 class GameCl {
+  constructor() {
+    this.actionsAfterClick = this.actionsAfterClick.bind(this);
+  }
+
   initGame() {
     allCasesArray = [];
     bombPositionArray = [];
@@ -367,9 +339,43 @@ class GameCl {
     newShow.showBombsNearby();
   }
 
+  actionsAfterClick(e) {
+    document
+      .querySelector(`.cover-top--${e.target.dataset.number}`)
+      .classList.add("hidden");
+    if (allCasesArray[e.target.dataset.number - 1].bombPresence) {
+      outcome = "defeat";
+      console.log("bomb");
+      coverPlate.removeEventListener("click", this.actionsAfterClick);
+      this.playGame();
+    } else if (
+      allCasesArray
+        .filter((cas) => !cas.bombPresence)
+        .every((val) => val.wasClickedOn)
+    ) {
+      coverPlate.removeEventListener("click", this.actionsAfterClick);
+      outcome = "victory";
+      this.playGame();
+      // On affiche le popup de victoire
+
+      // On lance une autre session de jeu
+    } else {
+      allCasesArray[e.target.dataset.number - 1].wasClickedOn = true;
+      coverPlate.removeEventListener("click", this.actionsAfterClick);
+      this.playGame();
+    }
+  }
+
   playGame() {
-    const newTurn = new TurnCl();
-    newTurn.gameProcess();
+    if (outcome === "ongoing") {
+      coverPlate.addEventListener("click", this.actionsAfterClick);
+    } else if (outcome === "defeat") {
+      coverPlate.classList.add("hidden");
+      gameOverPopup.classList.remove("blind");
+    } else if (outcome === "victory") {
+      coverPlate.classList.add("hidden");
+      victoryPopup.classList.remove("blind");
+    }
   }
 }
 
