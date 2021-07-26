@@ -364,17 +364,19 @@ class GameCl {
     scoreNumber.innerHTML = this.score;
   }
 
-  victoriousGame() {
+  coverHide() {
     coverPlate.removeEventListener("click", this.actionsAfterClick);
     coverPlate.classList.add("hidden");
+  }
+
+  victoriousGame() {
+    this.coverHide();
     victoryPopup.classList.remove("blind");
     this.score++;
     victoryPopup.addEventListener("click", this.startGame);
   }
 
   unsuccesfullGame() {
-    coverPlate.removeEventListener("click", this.actionsAfterClick);
-    coverPlate.classList.add("hidden");
     gameOverPopup.classList.remove("blind");
     gameoverBtn.addEventListener("click", this.startGame);
   }
@@ -394,6 +396,7 @@ class GameCl {
       .querySelector(`.cover-top--${e.target.dataset.number}`)
       .classList.add("hidden");
     if (allCasesArray[e.target.dataset.number - 1].bombPresence) {
+      this.coverHide();
       this.unsuccesfullGame();
     } else {
       allCasesArray[e.target.dataset.number - 1].wasClickedOn = true;
