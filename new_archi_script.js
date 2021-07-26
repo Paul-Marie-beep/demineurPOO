@@ -323,7 +323,7 @@ class ShowCl {
 class GameCl {
   constructor() {
     this.actionsAfterClick = this.actionsAfterClick.bind(this);
-    this.restartGame = this.restartGame.bind(this);
+    this.startGame = this.startGame.bind(this);
   }
 
   initGame() {
@@ -372,15 +372,14 @@ class GameCl {
     } else {
       allCasesArray[e.target.dataset.number - 1].wasClickedOn = true;
       coverPlate.removeEventListener("click", this.actionsAfterClick);
-      outcome = "victory";
       this.playGame();
     }
   }
 
-  restartGame() {
+  startGame() {
     outcome === "victory"
-      ? victoryPopup.removeEventListener("click", this.restartGame)
-      : gameOverPopup.removeEventListener("click", this.restartGame);
+      ? victoryPopup.removeEventListener("click", this.startGame)
+      : gameOverPopup.removeEventListener("click", this.startGame);
     outcome = "ongoing";
     this.initGame();
     this.playGame();
@@ -397,12 +396,12 @@ class GameCl {
     } else if (outcome === "defeat") {
       coverPlate.classList.add("hidden");
       gameOverPopup.classList.remove("blind");
-      gameoverBtn.addEventListener("click", this.restartGame);
+      gameoverBtn.addEventListener("click", this.startGame);
     } else if (outcome === "victory") {
       coverPlate.classList.add("hidden");
       victoryPopup.classList.remove("blind");
       score++;
-      victoryPopup.addEventListener("click", this.restartGame);
+      victoryPopup.addEventListener("click", this.startGame);
     }
   }
 }
@@ -410,8 +409,7 @@ class GameCl {
 class PerformCl {
   perform() {
     const newGame = new GameCl();
-    newGame.initGame();
-    newGame.playGame();
+    newGame.startGame();
   }
 }
 
