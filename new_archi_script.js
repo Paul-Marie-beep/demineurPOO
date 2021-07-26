@@ -409,12 +409,5 @@ class GameCl {
   }
 }
 
-class PerformCl {
-  perform() {
-    const newGame = new GameCl();
-    newGame.startGame();
-  }
-}
-
-const newPerform = new PerformCl();
-newPerform.perform();
+const newGame = new GameCl();
+newGame.startGame();
