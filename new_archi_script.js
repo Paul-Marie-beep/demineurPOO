@@ -16,6 +16,7 @@ const scoreNumber = document.querySelector(".score-number");
 const startPopup = document.querySelector(".start-popup");
 const startButton = document.querySelector(".start-button");
 let outcome = "ongoing";
+let score = 0;
 
 class CaseCl {
   constructor(position, numberOfBombsNearby) {
@@ -267,6 +268,7 @@ class ShowCl {
   }
   // On ajoute les caches en HTML
   createCover() {
+    coverPlate.classList.remove("hidden");
     let html;
     for (let i = 1; i <= this.caseNumber; i++) {
       html = `<div class="cover cover-top--${i}" data-number = "${i}"></div>`;
@@ -321,11 +323,14 @@ class ShowCl {
 class GameCl {
   constructor() {
     this.actionsAfterClick = this.actionsAfterClick.bind(this);
+    this.restartGame = this.restartGame.bind(this);
   }
 
   initGame() {
     allCasesArray = [];
     bombPositionArray = [];
+    boardGame.innerHTML = "";
+    coverPlate.innerHTML = "";
 
     const newBoardGame = new BoardGameCl(64, 10);
     newBoardGame.createJSCases();
@@ -337,6 +342,12 @@ class GameCl {
     newShow.createCover();
     newShow.showBombs();
     newShow.showBombsNearby();
+
+    victoryPopup.classList.add("blind");
+    gameOverPopup.classList.add("blind");
+    coverPlate.classList.remove("hidden");
+
+    this.displayScore();
   }
 
   actionsAfterClick(e) {
@@ -345,7 +356,6 @@ class GameCl {
       .classList.add("hidden");
     if (allCasesArray[e.target.dataset.number - 1].bombPresence) {
       outcome = "defeat";
-      console.log("bomb");
       coverPlate.removeEventListener("click", this.actionsAfterClick);
       this.playGame();
     } else if (
@@ -362,8 +372,23 @@ class GameCl {
     } else {
       allCasesArray[e.target.dataset.number - 1].wasClickedOn = true;
       coverPlate.removeEventListener("click", this.actionsAfterClick);
+      outcome = "victory";
       this.playGame();
     }
+  }
+
+  restartGame() {
+    outcome === "victory"
+      ? victoryPopup.removeEventListener("click", this.restartGame)
+      : gameOverPopup.removeEventListener("click", this.restartGame);
+    outcome = "ongoing";
+    this.initGame();
+    this.playGame();
+  }
+
+  displayScore() {
+    scoreNumber.classList.remove("blind");
+    scoreNumber.innerHTML = score;
   }
 
   playGame() {
@@ -372,9 +397,12 @@ class GameCl {
     } else if (outcome === "defeat") {
       coverPlate.classList.add("hidden");
       gameOverPopup.classList.remove("blind");
+      gameoverBtn.addEventListener("click", this.restartGame);
     } else if (outcome === "victory") {
       coverPlate.classList.add("hidden");
       victoryPopup.classList.remove("blind");
+      score++;
+      victoryPopup.addEventListener("click", this.restartGame);
     }
   }
 }
