@@ -1,7 +1,5 @@
 "use strict";
 
-const nombreDeCasesTemp = 64;
-
 const gameContainer = document.querySelector("board-container");
 const boardGame = document.querySelector(".boardgame");
 const coverPlate = document.querySelector(".cover--container");
@@ -274,10 +272,6 @@ class ShowCl {
     }
   }
 
-  // Pour montrer le jeu
-  showVisualBoard() {
-    gameContainer.classList.remove("blind");
-  }
   // Si l'objet case contient une bombe, on va l'afficher sur l'interface
   showBombs() {
     allCasesArray.forEach(function (cas) {
@@ -322,7 +316,6 @@ class GameCl {
   constructor() {
     this.actionsAfterClick = this.actionsAfterClick.bind(this);
     this.startGame = this.startGame.bind(this);
-    this.outcome = "ongoing";
     this.score = 0;
   }
 
