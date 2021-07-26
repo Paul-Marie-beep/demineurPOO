@@ -450,12 +450,15 @@ class StartGameCl {
   }
 }
 
+class PerformCl {
+  perform() {
+    const newStartGame = new StartGameCl();
+    // newStartGame.erasePreviousGame();
+
+    newStartGame.welcome();
+  }
+}
+
 const newScore = new KeepScoreCl();
-const newStartGame = new StartGameCl();
-newStartGame.welcome();
-
-// class PerformCl {
-
-// }
-
-// const Perform = new PerformCl();
+const newPerform = new PerformCl();
+newPerform.perform();
