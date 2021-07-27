@@ -62,59 +62,17 @@ class BoardGameCl {
   }
 
   // Pour chaque case, on calcule le nombre de cases qui sont sur les cases concommittantes.
-  calculateNumberOfBombsNearby() {
+
+  computeNeighbouringCases() {
     allCasesArray.forEach(function (cas) {
-      let count;
-      if (cas.bombPresence) {
-        cas.numberOfBombsNearby = 0;
-      } else if (cas.position === 1) {
-        count = 0;
-        if (allCasesArray[cas.position].bombPresence) {
-          count++;
-        }
-        if (allCasesArray[cas.position - 1 + 8].bombPresence) {
-          count++;
-        }
-        if (allCasesArray[cas.position - 1 + 9].bombPresence) {
-          count++;
-        }
-        cas.numberOfBombsNearby = count;
+      if (cas.position === 1) {
+        cas.neighbours = [2, 9, 10];
       } else if (cas.position === 8) {
-        count = 0;
-        if (allCasesArray[cas.position - 2].bombPresence) {
-          count++;
-        }
-        if (allCasesArray[cas.position - 1 + 8].bombPresence) {
-          count++;
-        }
-        if (allCasesArray[cas.position - 1 + 7].bombPresence) {
-          count++;
-        }
-        cas.numberOfBombsNearby = count;
-      } else if (cas.position === 57) {
-        count = 0;
-        if (allCasesArray[cas.position - 1 - 8].bombPresence) {
-          count++;
-        }
-        if (allCasesArray[cas.position].bombPresence) {
-          count++;
-        }
-        if (allCasesArray[cas.position - 1 - 7].bombPresence) {
-          count++;
-        }
-        cas.numberOfBombsNearby = count;
+        cas.neighbours = [7, 16, 15];
       } else if (cas.position === 64) {
-        count = 0;
-        if (allCasesArray[cas.position - 1 - 8].bombPresence) {
-          count++;
-        }
-        if (allCasesArray[cas.position - 2].bombPresence) {
-          count++;
-        }
-        if (allCasesArray[cas.position - 1 - 9].bombPresence) {
-          count++;
-        }
-        cas.numberOfBombsNearby = count;
+        cas.neighbours = [63, 56, 55];
+      } else if (cas.position === 57) {
+        cas.neighbours = [49, 50, 58];
       } else if (
         cas.position === 2 ||
         cas.position === 3 ||
@@ -123,23 +81,13 @@ class BoardGameCl {
         cas.position === 6 ||
         cas.position === 7
       ) {
-        count = 0;
-        if (allCasesArray[cas.position - 2].bombPresence) {
-          count++;
-        }
-        if (allCasesArray[cas.position].bombPresence) {
-          count++;
-        }
-        if (allCasesArray[cas.position - 1 + 8].bombPresence) {
-          count++;
-        }
-        if (allCasesArray[cas.position - 1 + 7].bombPresence) {
-          count++;
-        }
-        if (allCasesArray[cas.position - 1 + 9].bombPresence) {
-          count++;
-        }
-        cas.numberOfBombsNearby = count;
+        cas.neighbours = [
+          cas.position - 1,
+          cas.position + 1,
+          cas.position + 7,
+          cas.position + 8,
+          cas.position + 9,
+        ];
       } else if (
         cas.position === 58 ||
         cas.position === 59 ||
@@ -148,23 +96,13 @@ class BoardGameCl {
         cas.position === 62 ||
         cas.position === 63
       ) {
-        count = 0;
-        if (allCasesArray[cas.position - 2].bombPresence) {
-          count++;
-        }
-        if (allCasesArray[cas.position].bombPresence) {
-          count++;
-        }
-        if (allCasesArray[cas.position - 1 - 8].bombPresence) {
-          count++;
-        }
-        if (allCasesArray[cas.position - 1 - 7].bombPresence) {
-          count++;
-        }
-        if (allCasesArray[cas.position - 1 - 9].bombPresence) {
-          count++;
-        }
-        cas.numberOfBombsNearby = count;
+        cas.neighbours = [
+          cas.position - 1,
+          cas.position + 1,
+          cas.position - 7,
+          cas.position - 8,
+          cas.position - 9,
+        ];
       } else if (
         cas.position === 9 ||
         cas.position === 17 ||
@@ -173,23 +111,13 @@ class BoardGameCl {
         cas.position === 41 ||
         cas.position === 49
       ) {
-        count = 0;
-        if (allCasesArray[cas.position].bombPresence) {
-          count++;
-        }
-        if (allCasesArray[cas.position - 1 - 8].bombPresence) {
-          count++;
-        }
-        if (allCasesArray[cas.position - 1 + 8].bombPresence) {
-          count++;
-        }
-        if (allCasesArray[cas.position - 1 - 7].bombPresence) {
-          count++;
-        }
-        if (allCasesArray[cas.position - 1 + 9].bombPresence) {
-          count++;
-        }
-        cas.numberOfBombsNearby = count;
+        cas.neighbours = [
+          cas.position - 8,
+          cas.position - 7,
+          cas.position + 1,
+          cas.position + 8,
+          cas.position + 9,
+        ];
       } else if (
         cas.position === 16 ||
         cas.position === 24 ||
@@ -198,51 +126,37 @@ class BoardGameCl {
         cas.position === 48 ||
         cas.position === 56
       ) {
-        count = 0;
-        if (allCasesArray[cas.position - 2].bombPresence) {
-          count++;
-        }
-        if (allCasesArray[cas.position - 1 - 8].bombPresence) {
-          count++;
-        }
-        if (allCasesArray[cas.position - 1 + 8].bombPresence) {
-          count++;
-        }
-        if (allCasesArray[cas.position - 1 - 9].bombPresence) {
-          count++;
-        }
-        if (allCasesArray[cas.position - 1 + 7].bombPresence) {
-          count++;
-        }
-        cas.numberOfBombsNearby = count;
+        cas.neighbours = [
+          cas.position - 7,
+          cas.position - 8,
+          cas.position - 1,
+          cas.position + 7,
+          cas.position + 8,
+        ];
       } else {
-        count = 0;
-        if (allCasesArray[cas.position - 2].bombPresence) {
-          count++;
-        }
-        if (allCasesArray[cas.position].bombPresence) {
-          count++;
-        }
-        if (allCasesArray[cas.position - 1 - 8].bombPresence) {
-          count++;
-        }
-        if (allCasesArray[cas.position - 1 - 7].bombPresence) {
-          count++;
-        }
-        if (allCasesArray[cas.position - 1 - 9].bombPresence) {
-          count++;
-        }
-        if (allCasesArray[cas.position - 1 + 8].bombPresence) {
-          count++;
-        }
-        if (allCasesArray[cas.position - 1 + 7].bombPresence) {
-          count++;
-        }
-        if (allCasesArray[cas.position - 1 + 9].bombPresence) {
-          count++;
-        }
-        cas.numberOfBombsNearby = count;
+        cas.neighbours = [
+          cas.position - 9,
+          cas.position - 8,
+          cas.position - 7,
+          cas.position - 1,
+          cas.position + 1,
+          cas.position + 7,
+          cas.position + 8,
+          cas.position + 9,
+        ];
       }
+    });
+  }
+
+  calculateNumberOfBombsNearby() {
+    allCasesArray.forEach(function (cas) {
+      let count = 0;
+      cas.neighbours.forEach(function (nei) {
+        if (allCasesArray[nei - 1].bombPresence) {
+          count++;
+        }
+      });
+      cas.numberOfBombsNearby = count;
     });
   }
 }
@@ -285,7 +199,7 @@ class ShowCl {
   // Pour que sur chaque case, le nombre de bombes à proximité s'affiche.
   showBombsNearby() {
     allCasesArray.forEach(function (cas) {
-      if (cas.numberOfBombsNearby != 0) {
+      if (cas.bombPresence === false && cas.numberOfBombsNearby != 0) {
         // On montre le chiffre
         document.querySelector(
           `.inside-case--${cas.position}`
@@ -328,6 +242,7 @@ class GameCl {
     const newBoardGame = new BoardGameCl(64, 10);
     newBoardGame.createJSCases();
     newBoardGame.putBombsOnJSCases();
+    newBoardGame.computeNeighbouringCases();
     newBoardGame.calculateNumberOfBombsNearby();
 
     const newShow = new ShowCl(64);
@@ -339,6 +254,7 @@ class GameCl {
     victoryPopup.classList.add("blind");
     gameOverPopup.classList.add("blind");
     coverPlate.classList.remove("hidden");
+    // coverPlate.classList.add("hidden");
 
     this.displayScore();
   }
@@ -380,6 +296,8 @@ class GameCl {
     }
   }
 
+  uncoverOtherCases() {}
+
   actionsAfterClick(e) {
     document
       .querySelector(`.cover-top--${e.target.dataset.number}`)
@@ -389,6 +307,7 @@ class GameCl {
       this.unsuccesfullGame();
     } else {
       allCasesArray[e.target.dataset.number - 1].wasClickedOn = true;
+
       this.checkVictory();
     }
   }
